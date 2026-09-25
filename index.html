@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Happy Birthday Bro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="scene">
+      <div class="glow glow-1"></div>
+      <div class="glow glow-2"></div>
+      <div class="confetti confetti-1"></div>
+      <div class="confetti confetti-2"></div>
+      <div class="confetti confetti-3"></div>
+      <div class="confetti confetti-4"></div>
+      <div class="confetti confetti-5"></div>
+      <div class="confetti confetti-6"></div>
+      <div class="confetti confetti-7"></div>
+      <div class="confetti confetti-8"></div>
+
+      <div class="content">
+        <div class="header-stack">
+          <h1 class="title">Hi Bro</h1>
+          <p class="question">Are you ready?</p>
+        </div>
+        <div class="actions">
+          <button class="cta-btn cta-primary" data-value="3">Yess</button>
+          <button class="cta-btn cta-secondary" data-value="3">Of course</button>
+        </div>
+      </div>
+
+      <div class="countdown" aria-live="polite" aria-atomic="true">
+        <span class="countdown-number">3</span>
+      </div>
+
+      <div class="wow-overlay" aria-live="polite" aria-atomic="true">
+        <span class="wow-text">WOW</span>
+      </div>
+
+      <div class="ride-stage" aria-live="polite" aria-atomic="true">
+        <div class="bike">
+          <div class="wheel wheel-left"><span class="rim"></span></div>
+          <div class="wheel wheel-right"><span class="rim"></span></div>
+          <div class="bike-body">
+            <span class="bike-panel"></span>
+            <span class="headlight"></span>
+            <span class="tail-light"></span>
+          </div>
+          <div class="bike-frame"></div>
+          <div class="seat"></div>
+          <div class="handle"></div>
+          <div class="tail"></div>
+        </div>
+        <div class="rider">
+          <div class="helmet">
+            <span class="helmet-stripe stripe-1"></span>
+            <span class="helmet-stripe stripe-2"></span>
+            <span class="helmet-stripe stripe-3"></span>
+            <span class="visor"></span>
+          </div>
+          <div class="rider-head"></div>
+          <div class="rider-body"></div>
+          <div class="rider-arm rider-arm-left"></div>
+          <div class="rider-arm rider-arm-right"></div>
+          <div class="rider-leg rider-leg-left"></div>
+          <div class="rider-leg rider-leg-right"></div>
+          <div class="glove glove-left"></div>
+          <div class="glove glove-right"></div>
+        </div>
+        <div class="smoke-cloud">
+          <span class="smoke smoke-1"></span>
+          <span class="smoke smoke-2"></span>
+          <span class="smoke smoke-3"></span>
+          <span class="smoke smoke-4"></span>
+        </div>
+      </div>
+
+      <div class="celebration-stage" aria-live="polite" aria-atomic="true">
+        <div class="firework firework-1"></div>
+        <div class="firework firework-2"></div>
+        <div class="firework firework-3"></div>
+        <div class="firework firework-4"></div>
+        <div class="firework firework-5"></div>
+        <div class="firework firework-6"></div>
+        <div class="firework firework-7"></div>
+        <div class="firework firework-8"></div>
+        <div class="character-figure">
+          <div class="head"></div>
+          <div class="body"></div>
+          <div class="arm arm-left"></div>
+          <div class="arm arm-right"></div>
+          <div class="helmet"></div>
+        </div>
+      </div>
+
+      <div class="birthday-final" aria-live="polite" aria-atomic="true">
+        <span>Happy Birthday<br />My Bro &lt;3</span>
+      </div>
+
+      <section class="album-stage" aria-label="Album ảnh sinh nhật">
+        <div class="album-heading">
+          <span class="album-kicker">A little photo story</span>
+          <h2>Our memories</h2>
+          <p>Vuốt sang trái hoặc phải để lật từng trang</p>
+        </div>
+        <div class="album-shell">
+          <button class="album-control album-prev" type="button" aria-label="Trang trước">&#8592;</button>
+          <div class="album-book" tabindex="0" aria-label="Album ảnh, dùng phím mũi tên để lật trang">
+            <div class="album-page" data-page="0">
+              <div class="album-page-face album-page-front album-cover">
+                <span class="cover-label">HAPPY<br />BIRTHDAY</span>
+                <span class="cover-name">My Bro &lt;3</span>
+                <span class="cover-hint">Swipe to open</span>
+              </div>
+              <div class="album-page-face album-page-back"></div>
+            </div>
+            <div class="album-page" data-page="4">
+              <div class="album-page-face album-page-front album-last-page">
+                <span class="last-heart">♥</span>
+                <span>To more laughs,<br />more rides,<br />and more memories.</span>
+              </div>
+              <div class="album-page-face album-page-back"></div>
+            </div>
+          </div>
+          <button class="album-control album-next" type="button" aria-label="Trang tiếp theo">&#8594;</button>
+        </div>
+        <div class="album-progress" aria-live="polite">
+          <span class="album-page-number">Cover · 1 / 5</span>
+          <div class="album-dots"></div>
+        </div>
+      </section>
+
+      <div class="spark-layer" aria-hidden="true"></div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

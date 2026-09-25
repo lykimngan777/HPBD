@@ -1,0 +1,1051 @@
+:root {
+  --bg: #ffffff;
+  --pink: #ff5ea8;
+  --orange: #ff9f43;
+  --gold: #ffd166;
+  --peach: #ff7f50;
+  --purple: #8b5cf6;
+  --rose: #ff4d8d;
+  --text: #4f3d36;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  font-family: "Inter", sans-serif;
+  background: var(--bg);
+}
+
+body {
+  display: grid;
+  place-items: center;
+  overflow-x: hidden;
+}
+
+.scene {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(255, 177, 104, 0.14), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(255, 109, 165, 0.12), transparent 30%),
+    #ffffff;
+  overflow: visible;
+}
+
+.content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  z-index: 2;
+  padding: 10vh 4vw 12vh;
+}
+
+.header-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.title,
+.question {
+  position: relative;
+  margin: 0;
+  display: inline-block;
+  font-size: clamp(4.2rem, 9vw, 9rem);
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  line-height: 1.1;
+  padding-bottom: 0.3em;
+  font-family: "Inter", sans-serif;
+  background: linear-gradient(90deg, var(--pink) 0%, var(--orange) 18%, var(--gold) 38%, var(--rose) 62%, var(--purple) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  transform-origin: center;
+  text-shadow: 0 0 22px rgba(255, 154, 94, 0.18);
+}
+
+.title {
+  animation: burst 1.7s cubic-bezier(0.22, 1, 0.36, 1) both, titleFadeOut 0.9s ease-in 2.2s forwards;
+}
+
+
+.question {
+  margin-top: -2cm;
+  opacity: 0;
+  transform: translateY(16px);
+  animation: fadeUp 0.9s ease-out 3s forwards;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2.8rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(18px);
+  animation: fadeUp 0.9s ease-out 3.3s forwards;
+}
+
+.hidden {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.countdown {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  z-index: 20;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.countdown.show {
+  animation: countdownOverlay 3.3s ease forwards;
+}
+
+.countdown-number {
+  display: inline-block;
+  font-size: clamp(7rem, 22vw, 22rem);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  background: linear-gradient(90deg, var(--pink) 0%, var(--orange) 18%, var(--gold) 38%, var(--rose) 62%, var(--purple) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 25px rgba(255, 165, 110, 0.2);
+  transform: scale(0.4);
+  opacity: 0;
+}
+
+.countdown.show .countdown-number {
+  animation: countdownPulse 1s ease-in-out forwards;
+}
+
+.spark-layer {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 50;
+}
+
+.spark {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  opacity: 0.9;
+  animation: spark-burst 900ms ease-out forwards;
+}
+
+.wow-overlay,
+.ride-stage,
+.celebration-stage,
+.birthday-final,
+.album-stage {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 25;
+}
+
+.album-stage {
+  z-index: 30;
+  opacity: 0;
+  padding: 2rem 1rem;
+  transition: opacity 0.8s ease;
+  pointer-events: none;
+}
+
+.album-stage.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.album-heading {
+  position: absolute;
+  top: clamp(1.25rem, 5vh, 3.5rem);
+  text-align: center;
+  color: var(--text);
+}
+
+.album-kicker {
+  color: var(--rose);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.album-heading h2 {
+  margin: 0.35rem 0 0.25rem;
+  font-size: clamp(1.7rem, 4vw, 3rem);
+  letter-spacing: 0.04em;
+}
+
+.album-heading p {
+  margin: 0;
+  color: #846b62;
+  font-size: clamp(0.72rem, 1.5vw, 0.9rem);
+}
+
+.album-shell {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.5rem, 3vw, 2.5rem);
+  margin-top: clamp(4.5rem, 13vh, 8rem);
+}
+
+.album-book {
+  position: relative;
+  width: min(72vw, 430px);
+  height: min(64vh, 520px);
+  min-height: 320px;
+  perspective: 1800px;
+  outline: none;
+  filter: drop-shadow(0 18px 22px rgba(110, 60, 50, 0.2));
+  touch-action: pan-y;
+}
+
+.album-page {
+  position: absolute;
+  inset: 0;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  transition: transform 0.8s cubic-bezier(0.22, 0.7, 0.2, 1);
+}
+
+.album-page.flipped {
+  transform: rotateY(-180deg);
+}
+
+.album-page-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+  border: 10px solid #fffaf3;
+  border-radius: 5px 14px 14px 5px;
+  background: #fffaf3;
+  backface-visibility: hidden;
+}
+
+.album-page-back {
+  transform: rotateY(180deg);
+  background: linear-gradient(135deg, #ffe1e9, #fff1c8);
+}
+
+.album-page-front img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.album-cover {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #fffaf3;
+  background:
+    linear-gradient(145deg, rgba(255, 82, 143, 0.94), rgba(139, 92, 246, 0.9)),
+    radial-gradient(circle at 20% 20%, #ffd166, transparent 35%);
+}
+
+.album-cover::before,
+.album-cover::after {
+  content: "✦";
+  position: absolute;
+  color: rgba(255,255,255,0.65);
+  font-size: 2rem;
+}
+
+.album-cover::before { top: 14%; left: 16%; }
+.album-cover::after { right: 15%; bottom: 18%; }
+
+.cover-label {
+  font-size: clamp(1.7rem, 5vw, 2.6rem);
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  line-height: 1.15;
+}
+
+.cover-name {
+  margin-top: 1.25rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.cover-hint {
+  position: absolute;
+  bottom: 9%;
+  font-size: 0.65rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0.78;
+}
+
+.photo-caption {
+  position: absolute;
+  right: 1rem;
+  bottom: 0.85rem;
+  left: 1rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 8px;
+  color: #fff;
+  background: rgba(30, 20, 28, 0.56);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-align: center;
+  backdrop-filter: blur(5px);
+}
+
+.album-last-page {
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  color: var(--text);
+  background: linear-gradient(160deg, #fff5d9, #ffe1ea);
+  font-size: clamp(1.1rem, 3vw, 1.45rem);
+  font-weight: 800;
+  line-height: 1.65;
+  text-align: center;
+}
+
+.last-heart {
+  margin-bottom: 1rem;
+  color: var(--rose);
+  font-size: 3rem;
+}
+
+.album-control {
+  width: 2.7rem;
+  height: 2.7rem;
+  flex: 0 0 auto;
+  border: 1px solid rgba(255, 94, 168, 0.25);
+  border-radius: 50%;
+  color: var(--rose);
+  background: rgba(255,255,255,0.8);
+  cursor: pointer;
+  font-size: 1.3rem;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.album-control:hover:not(:disabled) {
+  transform: scale(1.1);
+}
+
+.album-control:disabled {
+  cursor: default;
+  opacity: 0.3;
+}
+
+.album-progress {
+  position: absolute;
+  bottom: clamp(1.2rem, 4vh, 2.5rem);
+  display: grid;
+  justify-items: center;
+  gap: 0.65rem;
+  color: #846b62;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.album-dots {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.album-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #eacbd0;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.album-dot.active {
+  transform: scale(1.45);
+  background: var(--rose);
+}
+
+.wow-text,
+.birthday-final span {
+  display: inline-block;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  background: linear-gradient(90deg, var(--pink), var(--orange), var(--gold), var(--rose), var(--purple));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-align: center;
+}
+
+.wow-text {
+  font-size: clamp(5rem, 16vw, 18rem);
+  animation: wowPulse 1.2s ease-in-out 0.1s forwards;
+}
+
+.ride-stage {
+  overflow: hidden;
+}
+
+.bike {
+  position: absolute;
+  left: -30vw;
+  bottom: 18%;
+  width: min(52vw, 560px);
+  height: min(28vw, 260px);
+  transform-origin: 50% 60%;
+  animation: bikeRide 5.2s cubic-bezier(0.22, 0.8, 0.26, 1) forwards, bikeHover 1.05s ease-in-out infinite alternate;
+}
+
+.wheel {
+  position: absolute;
+  bottom: 0;
+  width: 112px;
+  height: 112px;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, #f6f6f6 0 16%, #0e1116 16% 22%, #1d2025 23% 100%);
+  border: 7px solid #111;
+  box-shadow: inset 0 0 0 8px rgba(255,255,255,0.04);
+  animation: wheelSpin 0.7s linear infinite;
+}
+
+.wheel-left { left: 0; }
+.wheel-right { right: 12%; }
+
+.rim {
+  position: absolute;
+  inset: 20%;
+  border-radius: 50%;
+  border: 4px solid rgba(255, 255, 255, 0.7);
+  box-shadow: inset 0 0 0 8px rgba(255,255,255,0.08);
+}
+
+.bike-body {
+  position: absolute;
+  left: 18%;
+  bottom: 27%;
+  width: 56%;
+  height: 42%;
+  border-radius: 18px 34px 18px 18px;
+  background: linear-gradient(135deg, #ef3a45 0%, #be161c 20%, #d31d2d 48%, #a70b18 100%);
+  box-shadow: inset -10px -8px 0 rgba(0, 0, 0, 0.12), inset 0 0 0 8px rgba(255,255,255,0.06);
+  transform: skewX(-8deg);
+}
+
+.bike-panel {
+  position: absolute;
+  left: 14%;
+  top: 18%;
+  width: 36%;
+  height: 44%;
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.56), rgba(255,255,255,0.1));
+  transform: skewX(8deg);
+}
+
+.headlight {
+  position: absolute;
+  right: 8%;
+  top: 26%;
+  width: 18%;
+  height: 16%;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff7d1 0%, #ffdb7a 30%, #f8a71a 100%);
+  box-shadow: 0 0 18px rgba(255, 212, 103, 0.75);
+}
+
+.tail-light {
+  position: absolute;
+  left: -8%;
+  bottom: 32%;
+  width: 12%;
+  height: 14%;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ffd7d9, #ff7b7b);
+  box-shadow: 0 0 12px rgba(255, 120, 120, 0.9);
+}
+
+.bike-frame {
+  position: absolute;
+  left: 30%;
+  bottom: 46%;
+  width: 32%;
+  height: 10%;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #101114, #2b2d34);
+  transform: rotate(-22deg);
+}
+
+.seat {
+  position: absolute;
+  left: 46%;
+  bottom: 58%;
+  width: 18%;
+  height: 16%;
+  border-radius: 40% 40% 36% 36%;
+  background: linear-gradient(180deg, #22242a, #111317);
+  box-shadow: inset 6px 0 0 rgba(255,255,255,0.06);
+}
+
+.handle {
+  position: absolute;
+  left: 63%;
+  bottom: 53%;
+  width: 19%;
+  height: 6%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #ff8280, #ff5f5f);
+  transform: rotate(-20deg);
+}
+
+.tail {
+  position: absolute;
+  left: 11%;
+  bottom: 44%;
+  width: 18%;
+  height: 12%;
+  border-radius: 22px 0 25px 22px;
+  background: linear-gradient(180deg, #7a0b14, #3a080d);
+  transform: rotate(-16deg);
+}
+
+.rider {
+  position: absolute;
+  left: 33%;
+  bottom: 30%;
+  width: 180px;
+  height: 240px;
+  animation: riderBob 0.35s ease-in-out infinite alternate;
+}
+
+.rider-head {
+  position: absolute;
+  left: 26%;
+  top: 0;
+  width: 52%;
+  height: 32%;
+  border-radius: 42% 42% 48% 48%;
+  background: #f1d7c4;
+  box-shadow: inset -8px -8px 0 rgba(0,0,0,0.04);
+}
+
+.rider-body {
+  position: absolute;
+  left: 18%;
+  top: 29%;
+  width: 62%;
+  height: 46%;
+  border-radius: 18px 18px 22px 22px;
+  background: linear-gradient(180deg, #2d2f35 0%, #17191e 100%);
+  box-shadow: inset 0 0 0 8px rgba(255,255,255,0.04);
+}
+
+.rider-arm {
+  position: absolute;
+  top: 36%;
+  width: 16%;
+  height: 32%;
+  border-radius: 999px;
+  background: #f1d7c4;
+}
+
+.rider-arm-left { left: 8%; transform: rotate(28deg); }
+.rider-arm-right { right: 8%; transform: rotate(-18deg); }
+
+.rider-leg {
+  position: absolute;
+  bottom: 0;
+  width: 18%;
+  height: 28%;
+  border-radius: 18px;
+  background: #f1d7c4;
+}
+
+.rider-leg-left { left: 28%; transform: rotate(22deg); }
+.rider-leg-right { right: 28%; transform: rotate(-18deg); }
+
+.glove {
+  position: absolute;
+  top: 48%;
+  width: 18%;
+  height: 12%;
+  border-radius: 999px;
+  background: #f7d1a8;
+}
+
+.glove-left { left: 7%; }
+.glove-right { right: 7%; }
+
+.helmet {
+  position: absolute;
+  left: 20%;
+  top: 6%;
+  width: 60%;
+  height: 20%;
+  border-radius: 34% 34% 36% 36%;
+  background: linear-gradient(180deg, #0d0d10 0%, #4a4d56 100%);
+  box-shadow: inset 0 -8px 0 rgba(255,255,255,0.06);
+  z-index: 2;
+}
+
+.helmet::before {
+  content: "";
+  position: absolute;
+  inset: 20% 16% 12% 16%;
+  border-radius: 24% 24% 32% 32%;
+  background: linear-gradient(90deg, #d81a2a 0%, #d81a2a 28%, #ffffff 28%, #ffffff 56%, #0a3d9c 56%, #0a3d9c 100%);
+  box-shadow: inset 0 0 0 2px rgba(0,0,0,0.12);
+}
+
+.helmet-stripe {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 16%;
+  background: rgba(255,255,255,0.18);
+  z-index: 3;
+}
+
+.stripe-1 { top: 18%; }
+.stripe-2 { top: 48%; }
+.stripe-3 { top: 78%; }
+
+.visor {
+  position: absolute;
+  left: 16%;
+  right: 16%;
+  top: 10%;
+  height: 42%;
+  border-radius: 50% 50% 25% 25%;
+  background: rgba(255,255,255,0.32);
+  z-index: 4;
+}
+
+.smoke-cloud {
+  position: absolute;
+  left: 52%;
+  bottom: 28%;
+  width: 180px;
+  height: 120px;
+  opacity: 0;
+  animation: smokeBurst 1.8s ease-out 1.1s forwards;
+}
+
+.smoke {
+  position: absolute;
+  bottom: 0;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(122, 122, 122, 0.42);
+  filter: blur(10px);
+}
+
+.smoke-1 { left: 0; animation: smokeFloat 1.8s ease-out infinite; }
+.smoke-2 { left: 28%; animation: smokeFloat 1.8s ease-out 0.2s infinite; }
+.smoke-3 { left: 52%; animation: smokeFloat 1.8s ease-out 0.4s infinite; }
+.smoke-4 { left: 72%; animation: smokeFloat 1.8s ease-out 0.6s infinite; }
+
+.celebration-stage {
+  opacity: 0;
+  overflow: visible;
+}
+
+.character-figure {
+  position: relative;
+  width: clamp(220px, 24vw, 420px);
+  height: clamp(300px, 42vw, 620px);
+  transform: scale(0.7);
+  animation: characterPop 1.1s ease-out forwards;
+}
+
+.head {
+  position: absolute;
+  left: 50%;
+  top: 8%;
+  width: 46%;
+  height: 24%;
+  border-radius: 42% 42% 50% 50%;
+  background: #f0d7c7;
+  transform: translateX(-50%);
+  box-shadow: inset -10px -8px 0 rgba(0,0,0,0.06);
+}
+
+.body {
+  position: absolute;
+  left: 50%;
+  top: 28%;
+  width: 62%;
+  height: 50%;
+  transform: translateX(-50%);
+  border-radius: 18% 18% 16% 16%;
+  background: linear-gradient(180deg, #2f2f33 0%, #141519 100%);
+  box-shadow: inset 0 0 0 6px rgba(255,255,255,0.08), inset 12px 0 0 rgba(255,108,108,0.28);
+}
+
+.helmet {
+  position: absolute;
+  left: 50%;
+  top: 3%;
+  width: 52%;
+  height: 16%;
+  transform: translateX(-50%);
+  border-radius: 22% 22% 34% 34%;
+  background: linear-gradient(180deg, #0a0a0c 0%, #3b3d44 100%);
+  box-shadow: inset 0 -5px 0 rgba(255,255,255,0.06);
+}
+
+.arm {
+  position: absolute;
+  top: 34%;
+  width: 18%;
+  height: 36%;
+  border-radius: 24px;
+  background: linear-gradient(180deg, #101114, #30333a);
+  box-shadow: inset 0 0 0 6px rgba(255,255,255,0.04);
+}
+
+.arm-left {
+  left: 12%;
+  transform: rotate(26deg);
+}
+
+.arm-right {
+  right: 12%;
+  transform: rotate(-26deg);
+}
+
+.firework {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  opacity: 0;
+  box-shadow: 0 0 22px rgba(255,255,255,0.7);
+  animation: fireworkBurst 1.5s ease-out forwards;
+}
+
+.firework-1 { left: 10%; top: 18%; background: #ff5ea8; animation-delay: 0.1s; }
+.firework-2 { left: 20%; top: 34%; background: #ffd166; animation-delay: 0.35s; }
+.firework-3 { left: 30%; top: 18%; background: #4ecdc4; animation-delay: 0.5s; }
+.firework-4 { right: 18%; top: 20%; background: #ff9f43; animation-delay: 0.7s; }
+.firework-5 { right: 8%; top: 40%; background: #8b5cf6; animation-delay: 0.9s; }
+.firework-6 { left: 14%; bottom: 18%; background: #ff4d8d; animation-delay: 0.2s; }
+.firework-7 { right: 18%; bottom: 20%; background: #ffd166; animation-delay: 0.6s; }
+.firework-8 { left: 50%; top: 8%; background: #ff7f50; animation-delay: 0.8s; }
+
+.birthday-final span {
+  font-size: clamp(2rem, 4vw, 4rem);
+  animation: birthdayReveal 1.4s ease-out 0.4s forwards;
+}
+
+.cta-btn {
+  border: none;
+  border-radius: 999px;
+  padding: 0.9rem 1.8rem;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cta-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+}
+
+.cta-primary {
+  background: linear-gradient(135deg, var(--pink), var(--orange));
+  color: white;
+  box-shadow: 0 12px 24px rgba(255, 126, 151, 0.28);
+}
+
+.cta-secondary {
+  background: white;
+  color: var(--rose);
+  border: 2px solid rgba(255, 94, 168, 0.25);
+  box-shadow: 0 10px 20px rgba(139, 92, 246, 0.08);
+}
+
+.glow {
+  position: absolute;
+  width: 34vmin;
+  height: 34vmin;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 191, 96, 0.18), rgba(255, 126, 151, 0.12), transparent 68%);
+  filter: blur(10px);
+  animation: pulse 2.8s ease-in-out infinite alternate;
+}
+
+.glow-1 { transform: translate(-18vmin, -10vmin); }
+.glow-2 { transform: translate(18vmin, 12vmin); animation-delay: 0.8s; }
+
+.confetti {
+  position: absolute;
+  width: 12px;
+  height: 18px;
+  border-radius: 4px;
+  opacity: 0.9;
+  box-shadow: 0 0 10px rgba(255, 143, 99, 0.18);
+  animation: float 4s ease-in-out infinite;
+}
+
+.confetti-1 { top: 12%; left: 18%; background: #ff6b6b; }
+.confetti-2 { top: 18%; right: 20%; background: #ffd166; animation-delay: 0.3s; }
+.confetti-3 { top: 28%; left: 24%; background: #ff9f43; animation-delay: 0.7s; }
+.confetti-4 { top: 30%; right: 26%; background: #ff5ea8; animation-delay: 1s; }
+.confetti-5 { bottom: 22%; left: 20%; background: #8b5cf6; animation-delay: 1.5s; }
+.confetti-6 { bottom: 18%; right: 18%; background: #4ecdc4; animation-delay: 0.5s; }
+.confetti-7 { bottom: 30%; left: 34%; background: #ffd166; animation-delay: 1.2s; }
+.confetti-8 { bottom: 26%; right: 34%; background: #ff7f50; animation-delay: 0.8s; }
+
+@keyframes burst {
+  0% {
+    opacity: 0;
+    transform: scale(0.1) translateY(30px);
+    filter: blur(12px);
+  }
+  55% {
+    opacity: 1;
+    transform: scale(1.18) translateY(-6px);
+    filter: blur(1px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes glow {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  60% {
+    opacity: 0.8;
+    transform: scale(1.08);
+  }
+  100% {
+    opacity: 0.4;
+    transform: scale(1.12);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.82);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(1.2);
+    opacity: 0.85;
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes countdownOverlay {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes countdownPulse {
+  0% {
+    opacity: 0;
+    transform: scale(0.4) translateY(20px);
+  }
+  20% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  75% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.35) translateY(-20px);
+  }
+}
+
+@keyframes spark-burst {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--dx), var(--dy)) scale(0.2);
+  }
+}
+
+@keyframes wowPulse {
+  0% {
+    opacity: 0;
+    transform: scale(0.3) rotate(-8deg);
+  }
+  35% {
+    opacity: 1;
+    transform: scale(1.2) rotate(0deg);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1) rotate(2deg);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.4) rotate(-2deg);
+  }
+}
+
+@keyframes fireworkBurst {
+  0% {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+  20% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.1) translate(var(--dx), var(--dy));
+  }
+}
+
+@keyframes bikeRide {
+  0% {
+    opacity: 0;
+    transform: translateX(-30vw) scale(0.7) rotate(-4deg);
+  }
+  18% {
+    opacity: 1;
+  }
+  60% {
+    opacity: 1;
+    transform: translateX(22vw) scale(1.03) rotate(2deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(52vw) scale(1.05) rotate(3deg);
+  }
+}
+
+@keyframes bikeHover {
+  0% { transform: translateY(0) rotate(-2deg); }
+  100% { transform: translateY(-8px) rotate(2deg); }
+}
+
+@keyframes wheelSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes riderBob {
+  0% { transform: translateY(0) rotate(-2deg); }
+  100% { transform: translateY(-8px) rotate(2deg); }
+}
+
+@keyframes smokeBurst {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.4);
+  }
+  18% { opacity: 0.7; }
+  100% {
+    opacity: 0;
+    transform: translate(40px, -40px) scale(1.8);
+  }
+}
+
+@keyframes smokeFloat {
+  0% { transform: translateY(0) scale(0.8); }
+  100% { transform: translateY(-25px) scale(1.7); opacity: 0; }
+}
+
+@keyframes characterPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes birthdayReveal {
+  0% {
+    opacity: 0;
+    transform: scale(0.75) translateY(24px);
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1.05) translateY(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes titleFadeOut {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.8) translateY(-16px);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-15px) rotate(12deg);
+  }
+}
