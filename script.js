@@ -75,7 +75,7 @@ const photoCaptions = {
   '27.jpg': 'Bà chủ nữ công gia trưởng của Mr Quân',
   '28.jpg': 'Chông zợ hài được đi ăn với em gái',
   '29.jpg': 'Được em gái chụp hình checkin Skytree hé hé',
-  'logo.jpg': 'Zà đây là đam mê của Mr Quân (gặp đâu cũng dán)',
+  'logo.jpg': 'Zà đây là signature của Mr Quân (gặp là pít của ảnh)',
   'xe.jpg': 'Siu phẩmm ngầu he ngầu he😎',
   '30.JPG': 'Trộm zía có đam mê mua giày cho em gái (đôi thứ n)',
   '1790338832013_253007807605382436_9102123110770422775_bf897023ae73536c334bcee168ff7773.jpg': 'Được hai cho cái bằng ĐH zài trăm củ (biết ơn hai nhìu nhắmm)',
