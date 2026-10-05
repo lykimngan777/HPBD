@@ -28,21 +28,69 @@ const numbers = ['3', '2', '1'];
 const photoFiles = [
   '4.JPG', '1.JPG', '2.JPG', '3.JPG', '5.1.JPG', '5.2.jpg', '5.JPG',
   '6.JPG', '7.JPG', '8.JPG', '9.JPG', '10.JPG', '11.PNG', '12.PNG',
-  '13.PNG', '14.PNG', '15.JPG', '16.jpg', '17.jpeg', '17.1.jpg', '17.2.jpg',
-  '17.3.jpg', '18.jpeg', '19.jpeg', '20.jpeg', '21.jpeg', '22.jpeg',
+  '13.PNG', '14.PNG', '15.JPG', '16.jpg', '17.1.jpg', '17.2.jpg', '17.3.jpg',
+  '17.jpeg', '18.jpeg', '19.jpeg', '20.jpeg', '21.jpeg', '22.jpeg',
   '23.jpeg', '24.JPG', '25.PNG', '26.jpg', '27.jpg', '28.jpg', '29.jpg',
   'logo.jpg', 'xe.jpg', '30.JPG', '31.jpg', '32.JPG', '33.jpg',
   '1790338832013_253007807605382436_9102123110770422775_bf897023ae73536c334bcee168ff7773.jpg',
-  '1790338832118_253007807605382436_9102123110770422775_0c472314d8326541ae98a02dd3442139.jpg',
   '1790338832152_253007807605382436_9102123110770422775_0cd30d75e23e148d5486e39cf5b90e28.jpg',
+  '1790338832118_253007807605382436_9102123110770422775_0c472314d8326541ae98a02dd3442139.jpg',
   '1790338832225_253007807605382436_9102123110770422775_c28c9803ad68fc1a85ed5eb8d96585da.jpg',
   '1790338832242_253007807605382436_9102123110770422775_a9acf2b20daae85f7fbd8560e0e5c527.jpg',
   '1790338832260_253007807605382436_9102123110770422775_996e38e8f6f5256bbd5dfcd82eff1edd.jpg',
   '1790338832296_253007807605382436_9102123110770422775_f266b6514c4e006d4f6f4cf98ee09b83.jpg',
   '1790338832314_253007807605382436_9102123110770422775_49f778f4ae9f1a3b44f15266590faf81.jpg',
   '1790338832347_253007807605382436_9102123110770422775_e80441289bf8d83060268e24d2167917.jpg',
-  'IMG_2154.PNG', 'IMG_5542.PNG', 'IMG_9615.PNG',
+  'IMG_5542.PNG', 'IMG_2154.PNG', 'IMG_9615.PNG',
 ];
+const photoCaptions = {
+  '4.JPG': 'Cúc hàaa',
+  '1.JPG': '🤣',
+  '2.JPG': 'Đẹp troaiii',
+  '3.JPG': 'ỉu địu thục nữ zị đóa',
+  '5.1.JPG': 'Được chụp zới em gái nè hẹ hẹ',
+  '5.2.jpg': 'Sao hai hong ẵm em???',
+  '5.JPG': 'Vễ huông quá nè hí hí',
+  '6.JPG': 'Chuẩn bị thành đại za',
+  '7.JPG': 'Mặt lúc nì hiền he',
+  '8.JPG': 'Khoe ly matcha xì ta búc',
+  '9.JPG': 'Ờmmm',
+  '10.JPG': 'Nhonnn quạaa',
+  '11.PNG': 'Hay si tư',
+  '12.PNG': 'Zalo pít bắt khoảnh khắc quá nè',
+  '14.PNG': 'Hấy cưngg...',
+  '15.JPG': 'Si tư típ',
+  '16.jpg': 'Lúc nì Ngân hum có quà nên lấy hiện kim 😊',
+  '17.jpeg': 'Ái chà chà tình củm quóoo',
+  '17.1.jpg': 'Ăn Tết zới mamy iuu',
+  '17.2.jpg': 'Tốt nghiệp (ké)',
+  '17.3.jpg': 'Áo nổi quá hong thấy con tôm đâu',
+  '18.jpeg': 'Nó Hongkong mà nó điện ảnh nàm thaoo',
+  '21.jpeg': 'Cầm zàng bị run tay :)))',
+  '22.jpeg': 'Phé mi lì',
+  '23.jpeg': 'Nguyên dàn zai xênh gái đẹp',
+  '24.JPG': 'Ờmmmmm',
+  '25.PNG': 'Cúp lé gà bông 18 chủi',
+  '26.jpg': 'Lái xe vìa quơ nè',
+  '27.jpg': 'Bà chủ nữ công gia trưởng của Mr Quân',
+  '28.jpg': 'Chông zợ hài được đi ăn với em gái',
+  '29.jpg': 'Được em gái chụp hình checkin Skytree hé hé',
+  'logo.jpg': 'Zà đây là đam mê của Mr Quân (gặp đâu cũng dán)',
+  'xe.jpg': 'Siu phẩmm ngầu he ngầu he😎',
+  '30.JPG': 'Trộm zía có đam mê mua giày cho em gái (đôi thứ n)',
+  '1790338832013_253007807605382436_9102123110770422775_bf897023ae73536c334bcee168ff7773.jpg': 'Được hai cho cái bằng ĐH zài trăm củ (biết ơn hai nhìu nhắmm)',
+  '1790338832118_253007807605382436_9102123110770422775_0c472314d8326541ae98a02dd3442139.jpg': 'Được hai cho đi Enoshima',
+  '1790338832152_253007807605382436_9102123110770422775_0cd30d75e23e148d5486e39cf5b90e28.jpg': 'đi Nhật nè',
+  '1790338832225_253007807605382436_9102123110770422775_c28c9803ad68fc1a85ed5eb8d96585da.jpg': 'mùi nì thơmm',
+  '1790338832242_253007807605382436_9102123110770422775_a9acf2b20daae85f7fbd8560e0e5c527.jpg': 'quà sinh nhựt nì ngonn',
+  '1790338832260_253007807605382436_9102123110770422775_996e38e8f6f5256bbd5dfcd82eff1edd.jpg': 'Báo cưng của hai nè :)))',
+  '1790338832296_253007807605382436_9102123110770422775_f266b6514c4e006d4f6f4cf98ee09b83.jpg': 'Quàng châu cách cách của hai lun nè',
+  '1790338832314_253007807605382436_9102123110770422775_49f778f4ae9f1a3b44f15266590faf81.jpg': 'nó nhìn hai kìa',
+  '1790338832347_253007807605382436_9102123110770422775_e80441289bf8d83060268e24d2167917.jpg': 'lúc mới lụm con báo của hai vìa nè',
+  'IMG_2154.PNG': 'hai nhớ em cớp cí nì ngay trên tay hai hong😁',
+  'IMG_5542.PNG': '2 đứa nó rình gì kìa hai',
+  'IMG_9615.PNG': 'Oiii cái nì thì nghe mùi polime gòi khà khà',
+};
 let albumPages = [];
 let albumIndex = 0;
 let swipeStart = null;
@@ -92,10 +140,11 @@ photoFiles.forEach((fileName, index) => {
   page.innerHTML = `
     <div class="album-page-face album-page-front">
       <img src="photos/${encodeURIComponent(fileName)}" alt="Kỷ niệm ${index + 1}" loading="lazy" />
-      <span class="photo-caption">Memory ${index + 1}</span>
+      <span class="photo-caption"></span>
     </div>
     <div class="album-page-face album-page-back"></div>
   `;
+  page.querySelector('.photo-caption').textContent = photoCaptions[fileName] ?? 'nữa nèee';
   albumBook.insertBefore(page, albumLastPage);
 
   if (index === 35) {
