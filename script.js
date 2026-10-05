@@ -6,6 +6,7 @@ const sparkLayer = document.querySelector('.spark-layer');
 const wowOverlay = document.querySelector('.wow-overlay');
 const rideStage = document.querySelector('.ride-stage');
 const rideVideo = document.querySelector('.ride-video');
+const birthdayMusic = document.querySelector('.birthday-music');
 const rideFog = document.querySelector('.ride-fog');
 const rideError = document.querySelector('.ride-error');
 const celebrationStage = document.querySelector('.celebration-stage');
@@ -21,12 +22,12 @@ const albumLastPage = document.querySelector('.album-last-page').closest('.album
 
 const numbers = ['3', '2', '1'];
 const photoFiles = [
-  '1.JPG', '2.JPG', '3.JPG', '4.JPG', '5.JPG', '5.1.JPG', '5.2.jpg',
+  '4.JPG', '1.JPG', '2.JPG', '3.JPG', '5.JPG', '5.1.JPG', '5.2.jpg',
   '6.JPG', '7.JPG', '8.JPG', '9.JPG', '10.JPG', '11.PNG', '12.PNG',
   '13.PNG', '14.PNG', '15.JPG', '16.jpg', '17.jpeg', '17.1.jpg', '17.2.jpg',
   '17.3.jpg', '18.jpeg', '19.jpeg', '20.jpeg', '21.jpeg', '22.jpeg',
   '23.jpeg', '24.JPG', '25.PNG', '26.jpg', '27.jpg', '28.jpg', '29.jpg',
-  '30.JPG', '31.jpg', '32.JPG', '33.jpg',
+  'logo.jpg', 'xe.jpg', '30.JPG', '31.jpg', '32.JPG', '33.jpg',
   '1790338832013_253007807605382436_9102123110770422775_bf897023ae73536c334bcee168ff7773.jpg',
   '1790338832118_253007807605382436_9102123110770422775_0c472314d8326541ae98a02dd3442139.jpg',
   '1790338832152_253007807605382436_9102123110770422775_0cd30d75e23e148d5486e39cf5b90e28.jpg',
@@ -40,7 +41,7 @@ const photoFiles = [
 ];
 let albumPages = [];
 let albumIndex = 0;
-let touchStartX = 0;
+let swipeStart = null;
 let rideTransitionStarted = false;
 let rideFallbackTimer = null;
 
@@ -138,20 +139,37 @@ albumBook.addEventListener('keydown', (event) => {
     flipAlbum('next');
   }
 });
-albumBook.addEventListener('touchstart', (event) => {
-  touchStartX = event.changedTouches[0].clientX;
-}, { passive: true });
-albumBook.addEventListener('touchend', (event) => {
-  const distance = event.changedTouches[0].clientX - touchStartX;
-  if (Math.abs(distance) < 40) return;
-  flipAlbum(distance < 0 ? 'next' : 'prev');
-}, { passive: true });
+albumBook.addEventListener('pointerdown', (event) => {
+  if (event.pointerType === 'mouse' && event.button !== 0) return;
+  swipeStart = { x: event.clientX, y: event.clientY };
+  albumBook.setPointerCapture(event.pointerId);
+});
+albumBook.addEventListener('pointerup', (event) => {
+  if (!swipeStart) return;
+
+  const distanceX = event.clientX - swipeStart.x;
+  const distanceY = event.clientY - swipeStart.y;
+  swipeStart = null;
+
+  if (Math.abs(distanceX) < 45 || Math.abs(distanceX) <= Math.abs(distanceY)) return;
+  flipAlbum(distanceX < 0 ? 'next' : 'prev');
+});
+albumBook.addEventListener('pointercancel', () => {
+  swipeStart = null;
+});
 updateAlbum();
 
 function showCelebration() {
   if (rideTransitionStarted) return;
   rideTransitionStarted = true;
   if (rideFallbackTimer !== null) clearTimeout(rideFallbackTimer);
+  birthdayMusic.currentTime = 0;
+  birthdayMusic.muted = false;
+  if (birthdayMusic.paused) {
+    birthdayMusic.play().catch((error) => {
+      console.error('The birthday song could not start playing.', error);
+    });
+  }
 
   rideStage.style.opacity = '0';
   celebrationStage.style.opacity = '1';
@@ -199,6 +217,12 @@ function playRideVideo() {
 buttons.forEach((button) => {
   button.addEventListener('click', () => {
     if (countdown.classList.contains('show')) return;
+
+    birthdayMusic.currentTime = 0;
+    birthdayMusic.muted = true;
+    birthdayMusic.play().catch((error) => {
+      console.error('The birthday song could not be prepared for playback.', error);
+    });
 
     question.classList.add('hidden');
     actions.classList.add('hidden');
