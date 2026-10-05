@@ -11,6 +11,10 @@ const rideFog = document.querySelector('.ride-fog');
 const rideError = document.querySelector('.ride-error');
 const celebrationStage = document.querySelector('.celebration-stage');
 const birthdayFinal = document.querySelector('.birthday-final');
+const cakeStage = document.querySelector('.cake-stage');
+const cakeCandle = document.querySelector('.cake-candle');
+const cakeInstruction = document.querySelector('.cake-instruction');
+const cakeApplause = document.querySelector('.cake-applause');
 const buttons = document.querySelectorAll('.cta-btn');
 const albumStage = document.querySelector('.album-stage');
 const albumBook = document.querySelector('.album-book');
@@ -22,7 +26,7 @@ const albumLastPage = document.querySelector('.album-last-page').closest('.album
 
 const numbers = ['3', '2', '1'];
 const photoFiles = [
-  '4.JPG', '1.JPG', '2.JPG', '3.JPG', '5.JPG', '5.1.JPG', '5.2.jpg',
+  '4.JPG', '1.JPG', '2.JPG', '3.JPG', '5.1.JPG', '5.2.jpg', '5.JPG',
   '6.JPG', '7.JPG', '8.JPG', '9.JPG', '10.JPG', '11.PNG', '12.PNG',
   '13.PNG', '14.PNG', '15.JPG', '16.jpg', '17.jpeg', '17.1.jpg', '17.2.jpg',
   '17.3.jpg', '18.jpeg', '19.jpeg', '20.jpeg', '21.jpeg', '22.jpeg',
@@ -44,6 +48,8 @@ let albumIndex = 0;
 let swipeStart = null;
 let rideTransitionStarted = false;
 let rideFallbackTimer = null;
+let candleLit = false;
+let candleBlown = false;
 
 const createSpark = (x, y) => {
   const spark = document.createElement('span');
@@ -68,7 +74,7 @@ const createSpark = (x, y) => {
 };
 
 document.addEventListener('click', (event) => {
-  if (event.target.closest('.album-stage')) return;
+  if (event.target.closest('.cake-stage, .album-stage')) return;
   const x = event.clientX;
   const y = event.clientY;
 
@@ -81,6 +87,8 @@ photoFiles.forEach((fileName, index) => {
   const page = document.createElement('div');
   page.className = 'album-page';
   page.dataset.page = String(index + 1);
+  page.dataset.kind = 'photo';
+  page.dataset.photoNumber = String(index + 1);
   page.innerHTML = `
     <div class="album-page-face album-page-front">
       <img src="photos/${encodeURIComponent(fileName)}" alt="Kỷ niệm ${index + 1}" loading="lazy" />
@@ -89,6 +97,21 @@ photoFiles.forEach((fileName, index) => {
     <div class="album-page-face album-page-back"></div>
   `;
   albumBook.insertBefore(page, albumLastPage);
+
+  if (index === 35) {
+    const notePage = document.createElement('div');
+    notePage.className = 'album-page';
+    notePage.dataset.kind = 'note';
+    notePage.innerHTML = `
+      <div class="album-page-face album-page-front album-note-page">
+        <span class="album-note-kicker">A little note for you</span>
+        <p><span class="album-note-vietnamese">My bro cho tôi sống<br />như một tiểu thư tài phiệt vì</span> <strong>he is a CHAEBOL ^^</strong></p>
+        <span class="album-note-heart" aria-hidden="true">♥</span>
+      </div>
+      <div class="album-page-face album-page-back"></div>
+    `;
+    albumBook.insertBefore(notePage, albumLastPage);
+  }
 });
 
 albumPages = [...document.querySelectorAll('.album-page')];
@@ -107,11 +130,14 @@ function updateAlbum(direction = 'next') {
 
   const isCover = albumIndex === 0;
   const isClosingPage = albumIndex === albumPages.length - 1;
+  const currentPage = albumPages[albumIndex];
   albumPageNumber.textContent = isCover
     ? `Cover · 1 / ${albumPages.length - 1}`
     : isClosingPage
-      ? 'The end'
-      : `Photo ${albumIndex} / ${photoFiles.length}`;
+      ? 'To be continue'
+      : currentPage.dataset.kind === 'note'
+        ? 'A note for you'
+        : `Photo ${currentPage.dataset.photoNumber} / ${photoFiles.length}`;
   albumPrev.disabled = albumIndex === 0;
   albumNext.disabled = albumIndex === albumPages.length - 1;
   albumDots.querySelectorAll('.album-dot').forEach((dot, index) => {
@@ -181,10 +207,37 @@ function showCelebration() {
     birthdayFinal.style.transition = 'opacity 0.35s ease';
     setTimeout(() => {
       birthdayFinal.style.opacity = '0';
-      albumStage.classList.add('show');
+      cakeStage.classList.add('show');
     }, 2000);
   }, 1600);
 }
+
+cakeCandle.addEventListener('click', () => {
+  if (candleBlown) return;
+
+  if (!candleLit) {
+    candleLit = true;
+    cakeStage.classList.add('lit');
+    cakeCandle.setAttribute('aria-label', 'Thổi tắt nến');
+    cakeInstruction.textContent = 'Giờ lành đã đến, mời Mr Quân ước nguyện tuổi mới nèo';
+    return;
+  }
+
+  candleBlown = true;
+  cakeStage.classList.remove('lit');
+  cakeStage.classList.add('blown');
+  cakeCandle.disabled = true;
+  cakeInstruction.textContent = 'Ước nguyện đã được gửi đi, úm ba la xì bùaa';
+  cakeApplause.currentTime = 0;
+  cakeApplause.play().catch((error) => {
+    console.error('The applause sound could not start playing.', error);
+  });
+
+  setTimeout(() => {
+    cakeStage.classList.add('fade-out');
+    setTimeout(() => albumStage.classList.add('show'), 850);
+  }, 1900);
+});
 
 function handleRideVideoError(message, error) {
   if (rideFallbackTimer !== null || rideTransitionStarted) return;

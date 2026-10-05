@@ -21,6 +21,10 @@ html, body {
   background: var(--bg);
 }
 
+button {
+  font: inherit;
+}
+
 body {
   display: grid;
   place-items: center;
@@ -169,6 +173,7 @@ body {
 .ride-stage,
 .celebration-stage,
 .birthday-final,
+.cake-stage,
 .album-stage {
   position: absolute;
   inset: 0;
@@ -190,6 +195,269 @@ body {
 .album-stage.show {
   opacity: 1;
   pointer-events: auto;
+}
+
+.cake-stage {
+  z-index: 27;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(0.7rem, 2.5vh, 1.5rem);
+  padding: 3vh 1rem;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 52%, rgba(255, 220, 235, 0.78), transparent 44%),
+    radial-gradient(ellipse at 50% 100%, rgba(255, 215, 145, 0.3), transparent 50%),
+    #fff;
+  transition: opacity 0.85s ease;
+}
+
+.cake-stage.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.cake-stage.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cake-display {
+  position: relative;
+  width: min(90vw, 480px);
+  height: clamp(250px, 42vh, 360px);
+  flex: 0 0 auto;
+  margin: 0 auto;
+}
+
+.cake-plate {
+  position: absolute;
+  bottom: 5%;
+  left: 8%;
+  width: 84%;
+  height: 12%;
+  border: 3px solid #f5c978;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #fffefb, #ffe4ae);
+  box-shadow: 0 14px 24px rgba(151, 95, 69, 0.16);
+}
+
+.cake-tier {
+  position: absolute;
+  left: 50%;
+  overflow: hidden;
+  border: 3px solid rgba(255, 255, 255, 0.88);
+  border-radius: 18px 18px 22px 22px;
+  transform: translateX(-50%);
+  box-shadow: inset 0 9px 15px rgba(255, 255, 255, 0.42), 0 9px 16px rgba(151, 95, 69, 0.13);
+}
+
+.cake-tier::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 28%;
+  border-radius: 50% 50% 38% 38%;
+  background: rgba(255, 255, 255, 0.74);
+  content: "";
+}
+
+.cake-tier i {
+  position: absolute;
+  z-index: 1;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #fff8dc;
+  box-shadow: 0 1px 4px rgba(122, 74, 91, 0.18);
+}
+
+.cake-tier i:nth-child(1) { bottom: 27%; left: 20%; }
+.cake-tier i:nth-child(2) { bottom: 18%; left: 44%; background: #ffdf75; }
+.cake-tier i:nth-child(3) { right: 20%; bottom: 31%; }
+.cake-tier i:nth-child(4) { top: 48%; left: 65%; width: 6px; height: 6px; background: #ffafc5; }
+
+.cake-tier-top {
+  z-index: 2;
+  bottom: 37%;
+  width: 54%;
+  height: 31%;
+  background: linear-gradient(135deg, #ff9ab7, #f65a93);
+}
+
+.cake-tier-bottom {
+  z-index: 1;
+  bottom: 11%;
+  width: 77%;
+  height: 36%;
+  background: linear-gradient(135deg, #ffe28c, #ffbd58);
+}
+
+.cake-tier-message {
+  position: absolute;
+  z-index: 2;
+  inset: 25% 8% 8%;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  line-height: 1.12;
+  text-align: center;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.24);
+}
+
+.cake-tier-date {
+  color: #c93672;
+  font-size: clamp(1.6rem, 5.5vw, 2.2rem);
+  letter-spacing: 0.06em;
+}
+
+.cake-tier-greeting {
+  color: #92501e;
+  font-size: clamp(1.3rem, 3.7vw, 1.9rem);
+}
+
+.cake-candle {
+  position: absolute;
+  z-index: 4;
+  bottom: 65%;
+  left: 50%;
+  width: 30px;
+  height: 28%;
+  min-height: 58px;
+  padding: 0;
+  border: 2px solid rgba(255, 255, 255, 0.92);
+  border-radius: 9px 9px 5px 5px;
+  background: repeating-linear-gradient(135deg, #fff8e7 0 8px, #ff83aa 8px 14px);
+  box-shadow: 0 4px 12px rgba(148, 73, 93, 0.18);
+  cursor: pointer;
+  transform: translateX(-50%);
+  touch-action: manipulation;
+}
+
+.cake-candle:focus-visible {
+  outline: 3px solid var(--purple);
+  outline-offset: 7px;
+}
+
+.cake-candle:disabled {
+  cursor: default;
+}
+
+.candle-wick {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  width: 3px;
+  height: 9px;
+  border-radius: 2px;
+  background: #65453d;
+  transform: translateX(-50%);
+}
+
+.candle-flame {
+  position: absolute;
+  bottom: calc(100% + 7px);
+  left: 50%;
+  width: 20px;
+  height: 31px;
+  border-radius: 55% 45% 50% 50%;
+  background: radial-gradient(ellipse at 50% 68%, #fff8b5 0 23%, #ffd34e 42%, #ff8a32 72%, rgba(255, 92, 47, 0.1) 100%);
+  filter: drop-shadow(0 0 11px rgba(255, 166, 44, 0.85));
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%) scale(0.2);
+  transform-origin: center bottom;
+}
+
+.cake-stage.lit .candle-flame {
+  animation: candleFlicker 0.72s ease-in-out infinite alternate;
+  opacity: 1;
+}
+
+.cake-candle-smoke {
+  position: absolute;
+  z-index: 5;
+  bottom: 91%;
+  left: 50%;
+  width: 54px;
+  height: 88px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%);
+}
+
+.cake-candle-smoke span {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 16px;
+  height: 26px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(155, 151, 161, 0.43), rgba(174, 169, 178, 0.04) 72%);
+  filter: blur(3px);
+  opacity: 0;
+  transform: translateX(-50%);
+}
+
+.cake-stage.blown .cake-candle-smoke {
+  opacity: 1;
+}
+
+.cake-stage.blown .cake-candle-smoke span {
+  animation: candleSmoke 1.65s ease-out infinite;
+}
+
+.cake-stage.blown .cake-candle-smoke span:nth-child(2) {
+  animation-delay: 0.35s;
+}
+
+.cake-stage.blown .cake-candle-smoke span:nth-child(3) {
+  animation-delay: 0.7s;
+}
+
+.cake-sparkle {
+  position: absolute;
+  z-index: 3;
+  color: #f5bd4e;
+  text-shadow: 0 0 12px rgba(255, 199, 86, 0.55);
+  animation: cakeSparkle 2.2s ease-in-out infinite alternate;
+}
+
+.cake-sparkle-one {
+  top: 28%;
+  left: 9%;
+  font-size: 1.8rem;
+}
+
+.cake-sparkle-two {
+  top: 40%;
+  right: 8%;
+  color: #f17aa5;
+  font-size: 2.1rem;
+  animation-delay: 0.8s;
+}
+
+.cake-instruction {
+  width: min(100%, 620px);
+  margin: 0;
+  color: #765d55;
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  font-weight: 700;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.cake-hint {
+  display: none;
+  margin: -0.5rem 0 0;
+  color: #987d73;
+  font-size: clamp(0.78rem, 2vw, 0.92rem);
+  text-align: center;
+}
+
+.cake-stage.lit .cake-hint {
+  display: block;
 }
 
 .album-heading {
@@ -337,6 +605,75 @@ body {
   font-weight: 600;
   text-align: center;
   backdrop-filter: blur(5px);
+}
+
+.album-note-page {
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1.5rem, 7vw, 3.5rem);
+  color: #69435b;
+  background:
+    radial-gradient(circle at 18% 18%, rgba(255, 209, 102, 0.38), transparent 22%),
+    radial-gradient(circle at 82% 82%, rgba(255, 94, 168, 0.22), transparent 28%),
+    linear-gradient(145deg, #fff9ee, #fff0f5 58%, #f5edff);
+  text-align: center;
+}
+
+.album-note-page::before,
+.album-note-page::after {
+  position: absolute;
+  color: rgba(255, 94, 168, 0.3);
+  content: "✦";
+}
+
+.album-note-page::before {
+  top: 12%;
+  left: 12%;
+  font-size: 1.8rem;
+}
+
+.album-note-page::after {
+  right: 13%;
+  bottom: 14%;
+  font-size: 2.2rem;
+}
+
+.album-note-kicker {
+  color: var(--rose);
+  font-size: clamp(0.6rem, 1.7vw, 0.78rem);
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.album-note-page p {
+  max-width: 17ch;
+  margin: 1.4rem 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.4rem, 4.2vw, 2.15rem);
+  font-weight: 700;
+  line-height: 1.55;
+}
+
+.album-note-vietnamese {
+  display: block;
+  font-size: clamp(1rem, 4vw, 1.65rem);
+  font-family: "Times New Roman", Times, serif;
+  white-space: nowrap;
+}
+
+.album-note-page strong {
+  display: block;
+  margin-top: 0.6rem;
+  color: #9b55b8;
+  font-family: "Inter", sans-serif;
+  font-size: 1.05em;
+  font-weight: 900;
+}
+
+.album-note-heart {
+  color: var(--rose);
+  font-size: 1.8rem;
 }
 
 .album-last-page {
@@ -825,6 +1162,28 @@ body {
 .firework-6 { left: 14%; bottom: 18%; background: #ff4d8d; animation-delay: 0.2s; }
 .firework-7 { right: 18%; bottom: 20%; background: #ffd166; animation-delay: 0.6s; }
 .firework-8 { left: 50%; top: 8%; background: #ff7f50; animation-delay: 0.8s; }
+
+@keyframes candleFlicker {
+  from { transform: translateX(-50%) rotate(-5deg) scale(0.94, 1); }
+  to { transform: translateX(-50%) rotate(5deg) scale(1.04, 1.08); }
+}
+
+@keyframes candleSmoke {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 5px) scale(0.55);
+  }
+  20% { opacity: 0.6; }
+  100% {
+    opacity: 0;
+    transform: translate(calc(-50% + 12px), -76px) scale(1.8);
+  }
+}
+
+@keyframes cakeSparkle {
+  from { opacity: 0.45; transform: scale(0.82) rotate(-8deg); }
+  to { opacity: 1; transform: scale(1.12) rotate(12deg); }
+}
 
 .birthday-final span {
   font-size: clamp(5rem, 10.5vw, 10rem);
