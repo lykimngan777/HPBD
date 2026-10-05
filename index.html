@@ -42,41 +42,11 @@
       </div>
 
       <div class="ride-stage" aria-live="polite" aria-atomic="true">
-        <div class="bike">
-          <div class="wheel wheel-left"><span class="rim"></span></div>
-          <div class="wheel wheel-right"><span class="rim"></span></div>
-          <div class="bike-body">
-            <span class="bike-panel"></span>
-            <span class="headlight"></span>
-            <span class="tail-light"></span>
-          </div>
-          <div class="bike-frame"></div>
-          <div class="seat"></div>
-          <div class="handle"></div>
-          <div class="tail"></div>
+        <div class="ride-video-frame">
+          <video class="ride-video" src="media/motorcycle-ride.mp4" muted playsinline preload="auto" aria-label="Hoạt hình mô tô chạy qua màn hình"></video>
+          <div class="ride-fog" aria-hidden="true"></div>
         </div>
-        <div class="rider">
-          <div class="helmet">
-            <span class="helmet-stripe stripe-1"></span>
-            <span class="helmet-stripe stripe-2"></span>
-            <span class="helmet-stripe stripe-3"></span>
-            <span class="visor"></span>
-          </div>
-          <div class="rider-head"></div>
-          <div class="rider-body"></div>
-          <div class="rider-arm rider-arm-left"></div>
-          <div class="rider-arm rider-arm-right"></div>
-          <div class="rider-leg rider-leg-left"></div>
-          <div class="rider-leg rider-leg-right"></div>
-          <div class="glove glove-left"></div>
-          <div class="glove glove-right"></div>
-        </div>
-        <div class="smoke-cloud">
-          <span class="smoke smoke-1"></span>
-          <span class="smoke smoke-2"></span>
-          <span class="smoke smoke-3"></span>
-          <span class="smoke smoke-4"></span>
-        </div>
+        <p class="ride-error" role="alert">Không thể phát video mô tô. Vui lòng kiểm tra lại tệp video.</p>
       </div>
 
       <div class="celebration-stage" aria-live="polite" aria-atomic="true">

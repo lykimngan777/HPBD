@@ -5,6 +5,9 @@ const actions = document.querySelector('.actions');
 const sparkLayer = document.querySelector('.spark-layer');
 const wowOverlay = document.querySelector('.wow-overlay');
 const rideStage = document.querySelector('.ride-stage');
+const rideVideo = document.querySelector('.ride-video');
+const rideFog = document.querySelector('.ride-fog');
+const rideError = document.querySelector('.ride-error');
 const celebrationStage = document.querySelector('.celebration-stage');
 const birthdayFinal = document.querySelector('.birthday-final');
 const buttons = document.querySelectorAll('.cta-btn');
@@ -35,10 +38,11 @@ const photoFiles = [
   '1790338832347_253007807605382436_9102123110770422775_e80441289bf8d83060268e24d2167917.jpg',
   'IMG_2154.PNG', 'IMG_5542.PNG', 'IMG_9615.PNG',
 ];
-let engineSound = null;
 let albumPages = [];
 let albumIndex = 0;
 let touchStartX = 0;
+let rideTransitionStarted = false;
+let rideFallbackTimer = null;
 
 const createSpark = (x, y) => {
   const spark = document.createElement('span');
@@ -61,46 +65,6 @@ const createSpark = (x, y) => {
 
   setTimeout(() => spark.remove(), 900);
 };
-
-function playBikeSound() {
-  const AudioCtx = window.AudioContext || window.webkitAudioContext;
-  if (!AudioCtx) return;
-
-  if (!engineSound) {
-    const ctx = new AudioCtx();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    const lfo = ctx.createOscillator();
-    const lfoGain = ctx.createGain();
-
-    osc.type = 'sawtooth';
-    osc.frequency.value = 68;
-    gain.gain.value = 0.045;
-
-    lfo.type = 'sine';
-    lfo.frequency.value = 4;
-    lfoGain.gain.value = 20;
-
-    lfo.connect(lfoGain);
-    lfoGain.connect(osc.frequency);
-    osc.connect(gain).connect(ctx.destination);
-    osc.start();
-    lfo.start();
-
-    engineSound = { ctx, osc, gain, lfo, lfoGain };
-  }
-
-  if (engineSound.ctx.state === 'suspended') {
-    engineSound.ctx.resume();
-  }
-}
-
-function stopBikeSound() {
-  if (!engineSound) return;
-  engineSound.osc.stop();
-  engineSound.lfo.stop();
-  engineSound = null;
-}
 
 document.addEventListener('click', (event) => {
   if (event.target.closest('.album-stage')) return;
@@ -184,11 +148,58 @@ albumBook.addEventListener('touchend', (event) => {
 }, { passive: true });
 updateAlbum();
 
+function showCelebration() {
+  if (rideTransitionStarted) return;
+  rideTransitionStarted = true;
+  if (rideFallbackTimer !== null) clearTimeout(rideFallbackTimer);
+
+  rideStage.style.opacity = '0';
+  celebrationStage.style.opacity = '1';
+  celebrationStage.style.transition = 'opacity 0.35s ease';
+
+  setTimeout(() => {
+    celebrationStage.style.opacity = '0';
+    birthdayFinal.style.opacity = '1';
+    birthdayFinal.style.transition = 'opacity 0.35s ease';
+    setTimeout(() => {
+      birthdayFinal.style.opacity = '0';
+      albumStage.classList.add('show');
+    }, 2200);
+  }, 1600);
+}
+
+function handleRideVideoError(message, error) {
+  if (rideFallbackTimer !== null || rideTransitionStarted) return;
+  rideError.classList.add('show');
+  console.error(message, error);
+  rideFallbackTimer = setTimeout(showCelebration, 1800);
+}
+
+function playRideVideo() {
+  rideTransitionStarted = false;
+  rideFallbackTimer = null;
+  rideError.classList.remove('show');
+  rideFog.classList.remove('show');
+  rideVideo.currentTime = 0;
+  rideVideo.ontimeupdate = () => {
+    if (Number.isFinite(rideVideo.duration) && rideVideo.duration - rideVideo.currentTime <= 0.5) {
+      rideFog.classList.add('show');
+    }
+  };
+  rideVideo.onended = showCelebration;
+  rideVideo.onerror = () => {
+    handleRideVideoError('The motorcycle video could not be loaded or played.', rideVideo.error);
+  };
+
+  rideVideo.play().catch((error) => {
+    handleRideVideoError('The motorcycle video could not start playing.', error);
+  });
+}
+
 buttons.forEach((button) => {
   button.addEventListener('click', () => {
     if (countdown.classList.contains('show')) return;
 
-    playBikeSound();
     question.classList.add('hidden');
     actions.classList.add('hidden');
 
@@ -217,23 +228,7 @@ buttons.forEach((button) => {
                 wowOverlay.style.opacity = '0';
                 rideStage.style.opacity = '1';
                 rideStage.style.transition = 'opacity 0.2s ease';
-
-                setTimeout(() => {
-                  rideStage.style.opacity = '0';
-                  celebrationStage.style.opacity = '1';
-                  celebrationStage.style.transition = 'opacity 0.35s ease';
-                  stopBikeSound();
-
-                  setTimeout(() => {
-                    celebrationStage.style.opacity = '0';
-                    birthdayFinal.style.opacity = '1';
-                    birthdayFinal.style.transition = 'opacity 0.35s ease';
-                    setTimeout(() => {
-                      birthdayFinal.style.opacity = '0';
-                      albumStage.classList.add('show');
-                    }, 2200);
-                  }, 1600);
-                }, 4200);
+                playRideVideo();
               }, 1000);
             }
           }, 900);
