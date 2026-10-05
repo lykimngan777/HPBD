@@ -164,7 +164,7 @@ function showCelebration() {
     setTimeout(() => {
       birthdayFinal.style.opacity = '0';
       albumStage.classList.add('show');
-    }, 2200);
+    }, 2000);
   }, 1600);
 }
 
