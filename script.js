@@ -139,7 +139,7 @@ photoFiles.forEach((fileName, index) => {
   page.dataset.photoNumber = String(index + 1);
   page.innerHTML = `
     <div class="album-page-face album-page-front">
-      <img src="photos/${encodeURIComponent(fileName)}" alt="Kỷ niệm ${index + 1}" loading="lazy" />
+      <img data-src="photos-optimized/${encodeURIComponent(fileName.replace(/\.[^.]+$/, '.webp'))}" alt="Kỷ niệm ${index + 1}" decoding="async" />
       <span class="photo-caption"></span>
     </div>
     <div class="album-page-face album-page-back"></div>
@@ -172,6 +172,17 @@ albumPages.forEach((page, index) => {
   page.style.zIndex = String(albumPages.length - index);
 });
 
+function loadNearbyAlbumImages() {
+  if (!albumStage.classList.contains('show')) return;
+
+  for (let index = albumIndex; index <= Math.min(albumIndex + 2, albumPages.length - 1); index += 1) {
+    const image = albumPages[index].querySelector('img[data-src]');
+    if (!image || image.dataset.loaded) continue;
+    image.src = image.dataset.src;
+    image.dataset.loaded = 'true';
+  }
+}
+
 function updateAlbum(direction = 'next') {
   albumPages.forEach((page, index) => {
     page.classList.toggle('flipped', index < albumIndex);
@@ -193,6 +204,7 @@ function updateAlbum(direction = 'next') {
     dot.classList.toggle('active', index === Math.min(albumIndex, albumPages.length - 1));
   });
   albumBook.dataset.direction = direction;
+  loadNearbyAlbumImages();
 }
 
 function flipAlbum(direction) {
@@ -284,7 +296,10 @@ cakeCandle.addEventListener('click', () => {
 
   setTimeout(() => {
     cakeStage.classList.add('fade-out');
-    setTimeout(() => albumStage.classList.add('show'), 850);
+    setTimeout(() => {
+      albumStage.classList.add('show');
+      loadNearbyAlbumImages();
+    }, 850);
   }, 1900);
 });
 
