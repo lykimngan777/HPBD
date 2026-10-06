@@ -310,6 +310,29 @@ function handleRideVideoError(message, error) {
   rideFallbackTimer = setTimeout(showCelebration, 1800);
 }
 
+function handleRideVideoEnded() {
+  if (rideVideo.webkitDisplayingFullscreen && typeof rideVideo.webkitExitFullscreen === 'function') {
+    try {
+      rideVideo.webkitExitFullscreen();
+    } catch (error) {
+      console.error('The motorcycle video could not exit fullscreen.', error);
+    }
+    showCelebration();
+    return;
+  }
+
+  if (document.fullscreenElement) {
+    document.exitFullscreen()
+      .catch((error) => {
+        console.error('The motorcycle video could not exit fullscreen.', error);
+      })
+      .finally(showCelebration);
+    return;
+  }
+
+  showCelebration();
+}
+
 function playRideVideo() {
   rideTransitionStarted = false;
   rideFallbackTimer = null;
@@ -321,7 +344,7 @@ function playRideVideo() {
       rideFog.classList.add('show');
     }
   };
-  rideVideo.onended = showCelebration;
+  rideVideo.onended = handleRideVideoEnded;
   rideVideo.onerror = () => {
     handleRideVideoError('The motorcycle video could not be loaded or played.', rideVideo.error);
   };
